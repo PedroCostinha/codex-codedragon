@@ -1,0 +1,11 @@
+# Lista permitida: todo arquivo novo permanece ignorado por padrão.
+*
+!/.gitignore
+!/README.md
+!/assets/
+!/assets/reference/
+!/assets/reference/codedragon.png
+!/pets/
+!/pets/codedragon/
+!/pets/codedragon/pet-manifest.json
+!/pets/codedragon/spritesheet.png
