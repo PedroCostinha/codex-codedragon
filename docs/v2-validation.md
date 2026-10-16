@@ -1,71 +1,56 @@
-# Evidências de validação — CodeDragon V2
+# Validação — CodeDragon V2 revisão 2
 
-Data: 16/10/2026. Os resultados se referem ao PNG com SHA-256:
+Data: 16/10/2026. Todas as evidências desta revisão referem-se ao PNG final de **2.168.293 bytes**, SHA-256:
 
-`3648d95700b376609ffd0b63225d6dc255a2986b5c97b2b11be044a303f5f490`
+`e5420e75ae9ca6c9a1d54f13b771d5e1b4a3d5a13d5331a4ddd31987ad62a7b5`
 
-## Origem e alterações
+## Alterações e origem
 
-A V1 veio do commit `cd9aad5fcdf4eb91bc3a003e26fd2d23f5c6dd37`, na `main`, sem alterações locais ou commits exclusivos pendentes. As referências remotas foram atualizadas antes da criação de `feat/codedragon-v2-animations`.
+Esta é uma revisão posterior à V2 já instalada e ativa, conforme informado pelo usuário. A V2 anterior está no commit `6b3add420b52e307a664ca30985257791ebcc4f1`, SHA-256 `3648d95700b376609ffd0b63225d6dc255a2986b5c97b2b11be044a303f5f490`; aparece somente nas comparações. Relatórios antigos foram substituídos por resultados dos novos bytes.
 
-O original é PNG RGBA, 1536 × 2288, grade 8 × 11, 73 quadros obrigatórios e 15 células vazias. Passou no preflight oficial antes da edição. Seu SHA-256 é `f81bdbb0d2701f21602a1b4cf5950026e46895235f680aa401d58d48e49753bd`.
+A referência histórica permaneceu intacta. Uma nova referência canônica sem chifres orientou as tiras de ImageGen. Todos os **73 quadros foram alterados**, inclusive os 16 olhares. O crânio arredondado não contém chifres nem crista no topo; escamas pretas, olhos azuis, pequenas orelhas laterais, asas, cauda, moletom/capuz e emblema angular permanecem reconhecíveis.
 
-Foi usada edição programática autorizada na missão, com controles locais de respiração, cabeça, asas, cauda, mãos e pés. O desenho é amostrado uma vez por pose em alpha pré-multiplicado. A região do emblema é protegida e nenhuma direção é espelhada. Os 57 quadros de animação apresentam alterações além do simples alinhamento vertical; os 16 olhares são pixel-idênticos. A imagem de referência e o manifesto não foram alterados.
+Os seis quadros de `running` mostram trabalho sentado em banquinho, monitor e teclado sobre mesa compacta, em três quartos. As patas alternam o gesto de digitação, com pequenos ajustes de cabeça, olhos, asas, cauda e iluminação azul. O computador permite ver o rosto e o emblema. As duas corridas têm oito fases próprias, sem espelhar o logo, com azul mais perceptível nas patas, asas e cauda e prolongamentos curtos ligados ao sprite.
 
-## Testes executados
+As fontes, prompts e seus hashes estão em `assets/source/v2-r2/`. O build verifica essas fontes, executa os scripts de extração/composição/registro/limpeza da skill Pets 0.1.6 e gera o PNG e as prévias. O ajuste determinístico de escala/apoio não redesenha anatomia nem equipamentos. [Método e reprodução](v2-r2-authoring.md).
+
+## Testes reexecutados
 
 | Verificação | Resultado | Evidência |
 | --- | --- | --- |
-| Preflight oficial Pets do PNG final | `valid: true`, v2, sem erros | [pets-validation.json](../assets/qa/pets-validation.json) |
-| Validador da skill `validate_atlas.py --require-v2` | `ok: true`, sem erros ou avisos | [atlas-validation.json](../assets/qa/atlas-validation.json) |
-| Alpha, margens, células, manifesto, preservação dos olhares e fidelidade dos GIFs | `ok: true`; 73/15 células; 57 quadros modificados | [local-validation.json](../assets/qa/local-validation.json) |
-| Inspeção de todos os quadros com `inspect_frames.py` | `ok: true`, sem erros ou avisos | [frame-inspection.json](../assets/qa/frame-inspection.json) |
-| Chroma e bordas pelo validador da skill | Zero pixels de chroma, franjas verdes ou RGB escondido sob alpha zero | [chroma-verification.json](../assets/qa/chroma-verification.json) |
-| Continuidade dos olhares com `measure_direction_continuity.py` | `ok: true`; dois avisos; sem buracos internos de alpha | [direction-continuity.json](../assets/qa/direction-continuity.json) |
-| Verificação final com `validate_pet_quality.py` | `ok: true`, com avisos revisados dos olhares | [quality-gate.json](../assets/qa/quality-gate.json) |
-| Testes de regressão | 9 aprovados | `python tools/test_validation.py` |
+| Preflight oficial `Pets.validate_pet_spritesheet` | `valid: true`, v2, sem erros, 2.168.293 bytes | [Pets](../assets/qa/pets-validation.json) |
+| `validate_atlas.py --require-v2 --chroma-key #FF00FF` | `ok: true`, sem erros/avisos; PNG RGBA 1536 × 2288; RGB invisível zerado | [Estrutura](../assets/qa/atlas-validation.json) |
+| `inspect_frames.py --require-components` nos quadros do PNG final | `ok: true`, sem erros/avisos; extração original por componentes, sem fatiamento presumido | [Quadros](../assets/qa/frame-inspection.json) |
+| Validador local | `ok: true`; 73 ocupadas, 15 vazias; margens, manifesto, hashes dos quadros e todos os GIFs correspondentes | [Local](../assets/qa/local-validation.json) |
+| Limpeza de bordas | Uma passagem, alpha preservado; relatório vinculado ao PNG codificado | [Chroma](../assets/qa/chroma-verification.json) |
+| Continuidade dos 16 olhares | `ok: true`, sem buracos de alpha; três avisos quantitativos revisados | [Continuidade](../assets/qa/direction-continuity.json) |
+| Revisão rotulada dos 16 olhares | Cardinais aprovados; cinco intermediários aceitos com aviso explícito | [Semântica](../assets/qa/direction-semantics.json) |
+| Revisão cega por três revisores isolados | Quatro cardinais reconhecidos por unanimidade no eixo solicitado; maioria estrita por eixo | [Revisão cega](../assets/qa/blind-direction-review.json) |
+| `validate_pet_quality.py` | `ok: true`, sem erros, com avisos revisados; desvio máximo de centro 1,5 px; razão máxima de largura 1,173 | [Quality gate](../assets/qa/quality-gate.json) |
+| `python tools/test_validation.py` | **15 testes aprovados**, código de saída 0 | [Regressões](../assets/qa/regression-tests.json) |
+| Segunda reconstrução independente | PNG **idêntico byte a byte**, mesmo SHA-256 | [Reprodução](../assets/qa/reproducibility.json) |
+| Inspeção visual independente do contato final | Sem defeito visual bloqueante observado nos 73 quadros | [Revisão visual](../assets/qa/visual-review.json) |
 
-Os nove testes cobrem: aprovação da entrega, rejeição de dimensões erradas, ausência de alpha, pose vazia, ocupação de célula sem uso, alteração de olhar, corte na borda, RGB escondido e fundo opaco. Os casos corrompidos são temporários e não alteram a spritesheet distribuída.
+Os quinze testes cobrem aprovação da entrega e rejeição de dimensões erradas, ausência de alpha, quadro vazio, ocupação de célula indevida, alteração de olhar, retorno de um olhar antigo com chifres, retorno do trabalho antigo sem computador, troca de direção da corrida, relatório de sucesso com hash antigo, fonte adulterada, ordem incorreta no manifesto, corte na margem, RGB invisível e fundo opaco. As corrupções ocorrem em arquivos temporários.
 
-As ferramentas da skill utilizadas são externas ao repositório, do plugin Pets 0.1.6. O relatório de chroma agrega as contagens reais de `validate_atlas.py`; não houve geração em chroma nem necessidade de despill. O preflight oficial foi executado pela ferramenta disponível, sem preparar upload ou modificar a coleção de pets.
+As assinaturas dos quadros fixam os pixels revisados; não são detectores semânticos de chifres ou de computadores. Os GIFs decodificados são comparados aos compostos do PNG final, com tolerância de paleta. A validação oficial comprova aceitação estrutural e não substitui inspeção visual ou testes do reprodutor nativo.
 
-## Revisão visual e movimento
+## Movimento, transparência e olhares
 
-Foram inspecionados a spritesheet original, a referência, células ampliadas, o contato dos 73 quadros finais, a sequência de cinco quadros do salto, a prancha dos 16 olhares e amostras sobre fundos claro e escuro. As prévias animadas e comparações usam o PNG final, e a validação local compara cada quadro GIF decodificado ao quadro correspondente com tolerância para sua paleta reduzida.
+Foram revisados o contato dos 73 quadros, as poses ordenadas, prévias por estado, comparações com a V2 anterior, os 16 olhares rotulados e randomizados e amostras sobre fundos claro/escuro. Os PNGs/GIFs e o MP4 sem áudio foram regenerados a partir do PNG codificado final. As sequências permitem conferir alternância de patas, pequena variação do monitor e energia azul acompanhando as poses de locomoção. Não há clipping de computador, cadeira, corpo, asas ou cauda nas células finais.
 
-- Idle: respiração, piscada já existente, movimentos locais de asas/cauda e diferença de loop inferior à maior transição interna medida; sem troca de personagem.
-- Trabalho: mãos alternadas, olhar concentrado original, leve avanço da cabeça e acompanhamento das asas; não usa a corrida de locomoção.
-- Revisão/espera: gestos pequenos e distintos, com as expressões e poses aprovadas preservadas.
-- Corridas: arte original própria para cada direção, apoio estabilizado, membros alternados e oscilações de asas/cauda. Não houve inversão do emblema.
-- Erro: cabeça e asas baixam, cauda cede e fumaça original recebe tom cinza-azulado, seguida de recuperação.
-- Saudação: amplitude maior no aceno e movimento pequeno da cabeça.
-- Sucesso: preparação, subida, auge a 55 px da base, celebração com chama ligada à boca, retorno ao chão. O original tinha 30 px de elevação.
+O salto mantém as bases `[200, 171, 145, 169, 200]` com alpha > 0 e elevação de 55 px. O quality gate usa alpha > 16 e mede `[198, 169, 143, 167, 198]`, também 55 px, com pouso a 1 px do idle por esse limiar. A diferença vem da borda semitransparente.
 
-Com alpha maior que zero, as bases do salto são `[200, 171, 145, 169, 200]`; com limiar alpha > 16, a ferramenta da skill mede `[197, 169, 143, 167, 198]`. Ambos os critérios medem elevação de 55 px e pouso alinhado ao idle. A diferença de coordenadas decorre dos pixels de borda semitransparentes. Não é alteração de geometria entre relatórios.
+A ordem de olhar permanece 0° acima, sentido horário em passos de 22,5°, 90° direita, 180° abaixo e 270° esquerda. Os quatro cardinais foram reconhecidos pelos três revisores. As direções 67,5°, 112,5°, 202,5°, 247,5° e 292,5° são sutis. Em 112,5°, dois revisores cegos viram o eixo vertical como ambíguo; na revisão rotulada a cabeça baixa levemente em relação a 90°, preservando o quadrante pretendido. Em 202,5°, um revisor viu apenas abaixo; dois reconheceram abaixo/esquerda. Esses casos são avisos, não prova de ângulos físicos exatos.
 
-As oito direções intermediárias mais sutis estão explicitamente marcadas como avisos na [revisão rotulada](../assets/qa/direction-semantics.json). Os quatro cardinais permanecem reconhecíveis. As transições `270 → 292,5` e `337,5 → 0` geram avisos de diferença local, com pequeno deslocamento de centro e sem mudança de escala relevante. Como os olhares não foram editados, foram preservados e registrados como limitação herdada. Não foi realizada uma nova revisão cega independente nesta V2.
+As transições `157,5 → 180` e `337,5 → 0` têm diferenças de pixels maiores que as vizinhas. A primeira tem razão de área visível **1,24×**. Foram mantidas como avisos após a revisão em tamanho nativo: não se observou inversão, quadrante errado, buraco de alpha, deslocamento de centro ou alteração bloqueante de identidade/registro. A razão máxima de largura é 1,173 e o deslocamento de centro em relação ao idle não excede 1,5 px. As métricas estão preservadas integralmente, sem reduzir limiares para esconder falhas.
 
-As métricas de diferença ajudam a detectar saltos, mas não demonstram por si só fluidez. A revisão visual desta entrega usa quadros ordenados e prévias derivados da arte; não equivale à observação de todas as animações no reprodutor nativo. A cadência dos GIFs é demonstrativa, controlada pelo gerador de prévias.
+## Rastro e limites
 
-## Não executado e limitações
+A [documentação oficial de Pets](https://learn.chatgpt.com/docs/pets), consultada em 16/10/2026, e os esquemas das ferramentas disponíveis não expõem callbacks de arraste, partículas externas, controle de coordenadas ou efeitos persistentes. [Inventário e conclusão](../assets/qa/drag-capabilities.json).
 
-- Importação, substituição e seleção da V2 na conta: **não executadas**. O pet instalado foi preservado.
-- Reprodução da V2 com eventos reais de tarefa, teste, revisão e commit: **pendente de importação e avaliação no aplicativo**.
-- Voo livre, estados adicionais, callbacks e balões personalizados: nenhuma API suportada foi encontrada nas ferramentas e [documentação oficial consultada](https://learn.chatgpt.com/docs/pets). Não implementados.
-- Mensagens do README: exemplos conceituais; nenhum texto está ligado a eventos reais.
-- MP4: não gerado; as demonstrações são GIF/PNG. Não há áudio.
-- Library: não havia ferramenta de Library exposta nesta sessão; as evidências foram salvas no repositório, sem alegar publicação na Library.
+**Rastro persistente ao arrastar não implementado por ausência de suporte exposto.** O efeito entregue é a energia azul incorporada aos quadros de locomoção. Ela se move com o pet e não fica no caminho nem desaparece por temporizador independente. Não foram alterados arquivos internos do aplicativo, nem criados overlays, injeções, áudio, som, voz ou TTS.
 
-A documentação pública descreve upload web v1, enquanto o plugin desta sessão valida v2. A aceitação no plugin está confirmada; a disponibilidade de importação em outras interfaces não está. O manifesto mantém apenas sua função descritiva e não configura ações nativas.
+Nenhuma sessão de upload, criação, substituição, seleção ou importação foi executada. A V2 instalada permanece intacta. Reprodução desta revisão com eventos reais do host aguarda importação controlada e avaliação no aplicativo; a cadência demonstrativa dos GIFs não configura esse host. A documentação pública de upload web descreve v1; o plugin disponível validou o v2 desta revisão. A atualização deve usar um fluxo compatível com v2, preservando a entrada anterior. [Instruções](../README.md#atualizar-preservando-a-v2-instalada).
 
-## Reprodução local
-
-Com Python, Pillow 12.3.0, NumPy 2.3.5 e o histórico original do repositório:
-
-```sh
-python tools/build_v2.py
-python tools/validate_v2.py
-python tools/test_validation.py
-```
-
-O build verifica o hash da fonte, não altera a referência e não acumula transformações na V2. Uma mudança no PNG invalida os relatórios oficiais anteriores; execute novamente `validate_pet_spritesheet` com o caminho absoluto do novo PNG. Não publique um relatório antigo como evidência de novos bytes.
+Não havia ferramenta Library exposta nesta sessão. Fontes, prompts, arte final, prévias e QA foram preservados no repositório, sem alegar publicação na Library.

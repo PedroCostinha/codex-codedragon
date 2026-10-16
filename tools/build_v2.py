@@ -1,42 +1,43 @@
-"""Articulate the approved V1 artwork without redrawing the character.
+"""Rebuild V2 revision 2 from versioned ImageGen strips using the Pets pipeline.
 
-Authoring only. Source pixels come from the immutable original Git commit, or
-an explicit --source PNG. Every output frame is sampled once in premultiplied
-alpha. No sprite mirroring, facial repainting, or procedural replacement art.
+Never calls a generative service during build. Source PNGs and the pinned
+pipeline are verified before extraction; re-running cannot accumulate edits.
 """
 from __future__ import annotations
-
 import argparse
 import hashlib
 import io
 import json
 from pathlib import Path
 import subprocess
+import sys
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
-ORIGINAL_COMMIT = "cd9aad5"
-SOURCE_SHA256 = "f81bdbb0d2701f21602a1b4cf5950026e46895235f680aa401d58d48e49753bd"
+ORIGINAL_COMMIT = "6b3add420b52e307a664ca30985257791ebcc4f1"
+SOURCE_SHA256 = "3648d95700b376609ffd0b63225d6dc255a2986b5c97b2b11be044a303f5f490"
 SHEET = "pets/codedragon/spritesheet.png"
+ART = ROOT / "assets/source/v2-r2"
+PIPELINE = ROOT / "tools/pet_pipeline"
 NAMES = ["idle", "running-right", "running-left", "waving", "jumping",
          "failed", "waiting", "running", "review", "look-1", "look-2"]
 COUNTS = [6, 8, 8, 4, 5, 8, 6, 6, 6, 8, 8]
-# Demonstration timing only. The native player controls its own cadence.
-DURATIONS = [160, 85, 85, 180, 150, 150, 220, 95, 200, 160, 160]
+DURATIONS = [160, 85, 85, 180, 150, 150, 220, 140, 200, 160, 160]
 W, H = 192, 208
-Y, X = np.mgrid[:H, :W].astype(float)
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
 
 
 def original_bytes(source=None):
-    if source:
-        data = Path(source).read_bytes()
-    else:
-        data = subprocess.check_output(
-            ["git", "show", f"{ORIGINAL_COMMIT}:{SHEET}"], cwd=ROOT)
-    if hashlib.sha256(data).hexdigest() != SOURCE_SHA256:
-        raise ValueError("Source must be the original sheet; do not articulate V2 a second time")
+    """Previous published V2, exclusively for comparisons (not an art input)."""
+    data = Path(source).read_bytes() if source else subprocess.check_output(
+        ["git", "show", f"{ORIGINAL_COMMIT}:{SHEET}"], cwd=ROOT)
+    if digest(data) != SOURCE_SHA256:
+        raise ValueError("Comparison source must be the previous published V2")
     return data
 
 
@@ -44,151 +45,72 @@ def cell(image, row, column):
     return image.crop((column*W, row*H, (column+1)*W, (row+1)*H))
 
 
-def smooth(a, b, value):
-    t = np.clip((value-a)/(b-a), 0, 1)
-    return t*t*(3-2*t)
+def verify_sources(art=ART):
+    manifest = json.loads((art / "sources.json").read_text(encoding="utf-8"))
+    required = {f"{name}.png" for name in NAMES[:9]} | {"look-row-9.png", "look-row-10.png", "canonical-base.png", "look-cardinals.png"}
+    if not required.issubset(manifest["files"]):
+        raise ValueError("Source manifest is missing required artwork")
+    for name, expected in manifest["files"].items():
+        if Path(name).name != name or digest((art/name).read_bytes()) != expected:
+            raise ValueError(f"Source checksum mismatch: {name}")
+    pinned = json.loads((PIPELINE/"provenance.json").read_text(encoding="utf-8"))
+    for name, expected in pinned["files"].items():
+        if digest((PIPELINE/name).read_bytes()) != expected:
+            raise ValueError(f"Pinned pipeline checksum mismatch: {name}")
+    return manifest
 
 
-def region(cx, cy, rx, ry):
-    """Compact support, zero displacement beyond each anatomical region."""
-    radius = np.sqrt(((X-cx)/rx)**2 + ((Y-cy)/ry)**2)
-    return 1-smooth(0.25, 1, radius)
+def run_pipeline(name, *args):
+    subprocess.run([sys.executable, str(PIPELINE/name), *map(str, args)],
+                   check=True, cwd=ROOT, stdout=subprocess.DEVNULL)
 
 
-def sample_once(image, dx, dy):
-    """Inverse map with bilinear filtering in premultiplied RGBA.
+def register_frames(frames):
+    """Fit generated pixels with one scale per row, retaining the prior pet size.
 
-    Sampling RGB independently from alpha creates dark fringes. Multiplying
-    before sampling and unpremultiplying afterward keeps the original edge color.
+    This only resizes/places approved art, never paints anatomy or props. The
+    five jump baselines retain the previous revision's 55px celebration lift.
     """
-    rgba = np.asarray(image, dtype=float)/255
-    rgba[:, :, :3] *= rgba[:, :, 3:4]
-    sx, sy = X-dx, Y-dy
-    x0, y0 = np.floor(sx).astype(int), np.floor(sy).astype(int)
-    fx, fy = sx-x0, sy-y0
-    result = np.zeros((H, W, 4), dtype=float)
-    for ox, oy, weight in [(0, 0, (1-fx)*(1-fy)), (1, 0, fx*(1-fy)),
-                            (0, 1, (1-fx)*fy), (1, 1, fx*fy)]:
-        xx, yy = x0+ox, y0+oy
-        inside = (xx >= 0) & (xx < W) & (yy >= 0) & (yy < H)
-        result[inside] += rgba[yy[inside], xx[inside]]*weight[inside, None]
-    np.divide(result[:, :, :3], result[:, :, 3:4],
-              out=result[:, :, :3], where=result[:, :, 3:4] > 0)
-    output = np.clip(np.rint(result*255), 0, 255).astype(np.uint8)
-    output[output[:, :, 3] == 0] = 0
-    return Image.fromarray(output)
+    for row, (name, count) in enumerate(zip(NAMES[:9], COUNTS[:9])):
+        paths = [frames/name/f"{c:02d}.png" for c in range(count)]
+        images = [Image.open(p).convert("RGBA") for p in paths]
+        if any(im.getbbox() is None for im in images):
+            raise ValueError(f"Extraction produced an empty frame in {name}; repair the source strip")
+        height = max(im.getbbox()[3]-im.getbbox()[1] for im in images)
+        scale = min(1., (148 if row == 7 else 132)/height)
+        size = (round(W*scale), round(H*scale))
+        for col, (path, image) in enumerate(zip(paths, images)):
+            resized = image.resize(size, Image.Resampling.LANCZOS)
+            bbox = resized.getbbox()
+            baseline = [200, 171, 145, 169, 200][col] if row == 4 else 200
+            if row in (1, 2):
+                baseline = [200, 198, 196, 198, 200, 198, 196, 198][col]
+            target = Image.new("RGBA", (W, H))
+            target.alpha_composite(resized, ((W-size[0])//2, baseline-bbox[3]))
+            target.save(path)
 
 
-def articulate(image, *, breath=0, tilt=0, tail=0, wings=0, hands=0,
-               wave=0, lean=0, gaze=0, stride=0, head_drop=0, wing_open=0):
-    """Local motion around neck, shoulders and tail root; hoodie logo stays rigid."""
-    dx, dy = np.zeros_like(X), np.zeros_like(Y)
-    # Feet stay anchored while rib cage, neck and head rise with breathing.
-    upper = 1-smooth(166, 199, Y)
-    dy -= breath*upper
-    dx += breath*0.22*(X-96)/24*region(96, 159, 34, 29)
-    head = 1-smooth(130, 143, Y)
-    angle = np.deg2rad(tilt)
-    # Rigid head turn, feathered only at the neck; no head rescaling.
-    dx += ((np.cos(angle)-1)*(X-96)-np.sin(angle)*(Y-135))*head
-    dy += (np.sin(angle)*(X-96)+(np.cos(angle)-1)*(Y-135))*head
-    dx += lean*head
-    dy += head_drop*head
-    # Closed/half-closed frames retain their existing eyelid artwork.
-    for ex in (82, 113):
-        dx += gaze*region(ex, 117, 9, 8)
-    tail_weight = smooth(91, 119, X)*smooth(173, 188, Y)
-    dy += tail*tail_weight
-    dx += tail*0.32*tail_weight
-    left_wing = (1-smooth(65, 80, X))*smooth(126, 141, Y)*(1-smooth(166, 179, Y))
-    right_wing = smooth(115, 130, X)*smooth(126, 141, Y)*(1-smooth(166, 179, Y))
-    dy += wings*(left_wing+right_wing)
-    dx += wing_open*(right_wing-left_wing)
-    # Alternating typing hands, attached by a taper along the sleeves.
-    dx -= hands*0.35*region(77, 156, 15, 17)
-    dy += hands*region(77, 156, 15, 17)
-    dx += hands*0.35*region(116, 156, 15, 17)
-    dy -= hands*region(116, 156, 15, 17)
-    # Waving paw and forearm from the approved waving row.
-    dx += wave*region(62, 126, 20, 24)
-    dy -= wave*0.55*region(62, 126, 20, 24)
-    # Separate foot controls strengthen existing alternating directional poses.
-    dx += stride*region(75, 186, 20, 19)
-    dx -= stride*region(123, 186, 20, 19)
-    # Preserve the chest emblem's geometry; no horizontal flip or stretching.
-    logo = region(96, 155, 17, 16)
-    dx *= 1-logo
-    dy *= 1-logo
-    return sample_once(image, dx, dy)
-
-
-def place(image, baseline):
-    bbox = image.getbbox()
-    offset = round(baseline-bbox[3])
-    # Reject overflow instead of silently discarding anatomy.
-    if bbox[1]+offset < 5 or bbox[3]+offset > H-4:
-        raise ValueError(f"Unsafe vertical placement: {bbox}, offset {offset}")
-    output = Image.new("RGBA", (W, H))
-    output.alpha_composite(image, (0, offset))
-    return output
-
-
-def build(source):
-    output = source.copy()
-    for row, count in enumerate(COUNTS[:9]):
-        for col in range(count):
-            phase = 2*np.pi*col/count
-            sine, cosine = np.sin(phase), np.cos(phase)
-            src_col = [0, 1, 3, 2, 4][col] if row == 4 else col
-            frame = cell(source, row, src_col)
-            baseline = 200
-            if row == 0:
-                frame = articulate(frame, breath=1.8*sine, tail=2.8*np.sin(phase-0.5),
-                                   wings=2.1*sine, tilt=0.7*sine, gaze=0.55*sine)
-            elif row in (1, 2):
-                sign = 1 if row == 1 else -1
-                # Use each direction's original artwork, never mirror the emblem.
-                frame = articulate(frame, wings=4.2*sine, tail=3.7*np.sin(phase-0.6),
-                                   stride=sign*3.1*sine, lean=sign*0.8)
-                baseline = 198+2*np.cos(2*phase)
-            elif row == 3:
-                frame = articulate(frame, wave=[-2.5, 4.5, -4.5, 2.5][col],
-                                   tilt=[-1.5, 1, -1, 0][col], tail=3*sine, wings=1.8*sine)
-            elif row == 4:
-                # Anticipation -> lift -> held apex -> attached flame -> landing.
-                # Swap original poses 2/3 to put the blue breath on the descent.
-                frame = articulate(frame, wing_open=[-1, 5, 9, 5, -1][col],
-                                   wings=[2, -4, -7, 1, 2][col],
-                                   tail=[2, -3, -6, -2, 1][col],
-                                   tilt=[-1, -2, -3, -1, 0][col])
-                baseline = [200, 171, 145, 169, 200][col]
-            elif row == 5:
-                frame = articulate(frame, head_drop=[-0.7, 1, 3, 4, 4, 2, 1, 0][col],
-                                   tilt=[-1.3, 1, 2, 3, 2, 1, 0, 0][col],
-                                   wings=[0, 1, 3, 4, 4, 3, 1, 0][col],
-                                   tail=[0, 2, 4, 6, 6, 4, 2, 0][col], breath=0.6*sine)
-                # Tint only the original neutral gray nose smoke, not the dragon.
-                pixels = np.asarray(frame).copy()
-                rgb = pixels[:, :, :3].astype(float)
-                smoke = (X > 114) & (Y > 115) & (Y < 151) & (rgb.min(2) > 95) & ((rgb.max(2)-rgb.min(2)) < 38)
-                rgb[smoke] *= [0.73, 0.84, 1.0]
-                pixels[:, :, :3] = np.clip(rgb, 0, 255).astype(np.uint8)
-                frame = Image.fromarray(pixels)
-            elif row == 6:
-                frame = articulate(frame, breath=1.1*sine, wings=1.8*sine,
-                                   tail=2.8*np.sin(phase-0.6), tilt=0.8*sine, gaze=0.45*sine)
-            elif row == 7:
-                frame = articulate(frame, hands=[-4, 4, -3.5, 4, -4, 3.5][col],
-                                   head_drop=1.8, lean=0.7, tilt=0.5*sine,
-                                   wings=2.5*sine, tail=2.8*np.sin(phase-0.6), breath=0.65*cosine)
-            else:
-                frame = articulate(frame, tilt=[-2, -3, -2, 0.6, 1, -1][col],
-                                   gaze=0.65*sine, hands=0.8*sine,
-                                   tail=2.2*sine, wings=0.8*sine, breath=0.7*sine)
-            frame = place(frame, baseline)
-            output.paste(frame, (col*W, row*H))
-    # Rows 9 and 10 and all unused cells remain byte-for-byte identical pixels.
-    return output
+def build(destination, workdir):
+    verify_sources()
+    workdir.mkdir(parents=True, exist_ok=True)
+    frames = workdir/"frames"
+    run_pipeline("extract_strip_frames.py", "--decoded-dir", ART,
+                 "--output-dir", frames, "--method", "components", "--chroma-key", "#FF00FF")
+    register_frames(frames)
+    run_pipeline("compose_atlas.py", "--frames-root", frames, "--output", workdir/"standard.png")
+    run_pipeline("assemble_extended_atlas.py", "--base-atlas", workdir/"standard.png",
+                 "--look-row-9", ART/"look-row-9.png", "--chroma-key", "#FF00FF",
+                 "--registered-row-output", workdir/"registered-row-9.png",
+                 "--registration-manifest-output", workdir/"registration.json")
+    run_pipeline("assemble_extended_atlas.py", "--base-atlas", workdir/"standard.png",
+                 "--registered-row-9", workdir/"registered-row-9.png",
+                 "--row-9-registration", workdir/"registration.json",
+                 "--look-row-10", ART/"look-row-10.png", "--chroma-key", "#FF00FF",
+                 "--output", workdir/"assembled.png")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    run_pipeline("despill_chroma_edges.py", workdir/"assembled.png", "--output", destination,
+                 "--chroma-key", "#FF00FF", "--json-out", workdir/"chroma.json")
+    return Image.open(destination)
 
 
 def background(frame, light=False):
@@ -213,7 +135,7 @@ def preview(source, output, destination):
             pair = Image.new("RGB", (W*2, H+28), (29, 36, 49))
             pair.paste(background(cell(source, row, col)), (0, 28))
             pair.paste(frame, (W, 28))
-            ImageDraw.Draw(pair).text((8, 6), "Original                 V2", fill="white", font=font)
+            ImageDraw.Draw(pair).text((8, 6), "V2 anterior             V2 rev.2", fill="white", font=font)
             compare.append(pair)
         frames[0].save(destination/f"{NAMES[row]}.gif", save_all=True,
                        append_images=frames[1:], duration=DURATIONS[row], loop=0, disposal=2)
@@ -261,23 +183,28 @@ def preview(source, output, destination):
         for col, (r, c) in enumerate([(0, 3), (1, 3), (2, 3), (3, 1), (4, 2), (5, 4), (7, 1), (8, 1)]):
             mattes.paste(background(cell(output, r, c), light=row == 1), (col*W, row*H))
     mattes.save(destination/"alpha-mattes.png")
+    # The video is encoded from the decoded final-sheet GIF, with no audio.
+    import imageio_ffmpeg
+    subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error",
+                    "-i", str(destination/"all-states.gif"), "-an", "-c:v", "libx264",
+                    "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+                    str(destination/"all-states.mp4")], check=True)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path)
+    parser.add_argument("--source", type=Path, help="previous V2 PNG for comparisons without Git history")
+    parser.add_argument("--output", type=Path, default=ROOT/SHEET)
+    parser.add_argument("--work-dir", type=Path, default=ROOT/"tmp/build-v2-r2")
+    parser.add_argument("--skip-previews", action="store_true")
     args = parser.parse_args()
-    data = original_bytes(args.source)
-    source = Image.open(io.BytesIO(data))
-    if source.mode != "RGBA" or source.size != (1536, 2288):
-        raise SystemExit("Expected the original RGBA v2 sheet")
-    output = build(source)
-    output.save(ROOT/SHEET, optimize=True)
-    encoded = Image.open(ROOT/SHEET)
-    preview(source, encoded, ROOT/"assets/previews")
-    print(json.dumps({"source_sha256": hashlib.sha256(data).hexdigest(),
-                      "output_sha256": hashlib.sha256((ROOT/SHEET).read_bytes()).hexdigest(),
-                      "modified_animation_frames": 57, "preserved_look_frames": 16}, indent=2))
+    output = build(args.output, args.work_dir)
+    if not args.skip_previews:
+        source_data = original_bytes(args.source)
+        preview(Image.open(io.BytesIO(source_data)), output, ROOT/"assets/previews")
+    print(json.dumps({"output_sha256": digest(args.output.read_bytes()),
+                      "revision": "V2 revision 2", "generated_animation_frames": 57,
+                      "regenerated_look_frames": 16}, indent=2))
 
 
 if __name__ == "__main__":

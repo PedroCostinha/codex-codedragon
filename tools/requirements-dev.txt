@@ -1,3 +1,4 @@
 # Optional authoring/QA only; the installed pet has no runtime dependencies.
 Pillow==12.3.0
 numpy==2.3.5
+imageio-ffmpeg==0.6.0

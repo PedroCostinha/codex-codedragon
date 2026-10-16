@@ -1,10 +1,10 @@
 {
   "tool": "Pets.validate_pet_spritesheet",
   "date": "2026-10-16",
-  "sha256": "3648d95700b376609ffd0b63225d6dc255a2986b5c97b2b11be044a303f5f490",
+  "sha256": "e5420e75ae9ca6c9a1d54f13b771d5e1b4a3d5a13d5331a4ddd31987ad62a7b5",
   "result": {
     "valid": true,
-    "file_size_bytes": 1913271,
+    "file_size_bytes": 2168293,
     "mime_type": "image/png",
     "width": 1536,
     "height": 2288,
@@ -26,5 +26,5 @@
     ],
     "errors": []
   },
-  "scope": "Read-only official preflight. No upload session, pet update, import or selection executed."
+  "scope": "Official read-only preflight of exact final bytes; no upload session, import, pet update or selection."
 }

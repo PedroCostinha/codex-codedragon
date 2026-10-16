@@ -1,72 +1,70 @@
 {
   "ok": true,
   "atlas": "C:\\Projetos\\codex-codedragon\\pets\\codedragon\\spritesheet.png",
-  "encoded_bytes": 1913271,
-  "sha256": "3648d95700b376609ffd0b63225d6dc255a2986b5c97b2b11be044a303f5f490",
+  "encoded_bytes": 2168293,
+  "sha256": "e5420e75ae9ca6c9a1d54f13b771d5e1b4a3d5a13d5331a4ddd31987ad62a7b5",
   "jump": {
-    "idle_baseline": 198,
+    "idle_baseline": 197,
     "jump_baselines": [
-      197,
+      198,
       169,
       143,
       167,
       198
     ],
     "airborne_lift_pixels": 55,
-    "landing_delta_pixels": 0
+    "landing_delta_pixels": 1
   },
   "look_registration": {
-    "neutral_center_x": 95.5,
+    "neutral_center_x": 96.0,
     "look_centers_x": [
-      92.5,
-      92.0,
-      92.0,
-      90.0,
-      91.0,
-      91.0,
-      89.5,
-      90.0,
-      93.0,
-      93.5,
-      95.0,
-      95.0,
       95.0,
       96.0,
+      96.0,
+      96.5,
+      97.0,
+      97.0,
+      97.0,
+      97.5,
       95.5,
-      94.5
+      96.0,
+      96.0,
+      97.0,
+      97.0,
+      96.5,
+      97.0,
+      96.0
     ],
     "look_widths": [
-      85,
-      84,
-      84,
       86,
       84,
       84,
       83,
-      84,
-      82,
-      79,
       82,
       82,
       82,
-      82,
-      83,
-      83
+      81,
+      95,
+      94,
+      92,
+      92,
+      92,
+      91,
+      92,
+      92
     ],
-    "maximum_center_drift_pixels": 6.0,
-    "maximum_width_ratio": 1.0886075949367089
+    "maximum_center_drift_pixels": 1.5,
+    "maximum_width_ratio": 1.1728395061728396
   },
   "errors": [],
   "warnings": [
-    "look direction 022.5 accepted with a reviewed warning",
     "look direction 067.5 accepted with a reviewed warning",
     "look direction 112.5 accepted with a reviewed warning",
-    "look direction 157.5 accepted with a reviewed warning",
     "look direction 202.5 accepted with a reviewed warning",
     "look direction 247.5 accepted with a reviewed warning",
     "look direction 292.5 accepted with a reviewed warning",
-    "look direction 337.5 accepted with a reviewed warning",
-    "270->292.5 diff is a local outlier (1393 pixels vs neighbor average 906)",
-    "337.5->000 diff is a local outlier (2061 pixels vs neighbor average 1064)"
+    "157.5->180 diff is a local outlier (2861 pixels vs neighbor average 816)",
+    "157.5->180 sprite area ratio is high (1.24)",
+    "337.5->000 diff is a local outlier (2035 pixels vs neighbor average 830)"
   ]
 }

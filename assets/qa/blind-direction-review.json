@@ -1,0 +1,595 @@
+{
+  "sha256": "e5420e75ae9ca6c9a1d54f13b771d5e1b4a3d5a13d5331a4ddd31987ad62a7b5",
+  "date": "2026-10-16",
+  "method": "Randomized A-P sheet; three isolated reviewers, no prompts/order/answers shown; strict majority per axis",
+  "sheet": "assets/previews/look-blind.png",
+  "reviewers": {
+    "locomotion": [
+      {
+        "label": "A",
+        "horizontal": "screen-right",
+        "vertical": "down",
+        "reason": "Muzzle turns right and lowers toward chest; both pupils sit low-right."
+      },
+      {
+        "label": "B",
+        "horizontal": "screen-right",
+        "vertical": "down",
+        "reason": "Snout points right with a slight downward pitch; pupils are toward lower-right eye edges."
+      },
+      {
+        "label": "C",
+        "horizontal": "screen-left",
+        "vertical": "up",
+        "reason": "Raised muzzle projects left; pupils and visible eye surfaces aim upper-left."
+      },
+      {
+        "label": "D",
+        "horizontal": "ambiguous",
+        "vertical": "up",
+        "reason": "Centered symmetric raised snout, chin exposed, both pupils high under upper lids."
+      },
+      {
+        "label": "E",
+        "horizontal": "screen-left",
+        "vertical": "ambiguous",
+        "reason": "Snout and pupils point left; head pitch and eye height appear approximately level."
+      },
+      {
+        "label": "F",
+        "horizontal": "screen-left",
+        "vertical": "up",
+        "reason": "Muzzle lifts strongly toward left; eyes look high-left above the snout."
+      },
+      {
+        "label": "G",
+        "horizontal": "screen-left",
+        "vertical": "up",
+        "reason": "Head turns left with slightly raised snout; pupils sit above-left within the eyes."
+      },
+      {
+        "label": "H",
+        "horizontal": "screen-left",
+        "vertical": "down",
+        "reason": "Forehead dominates while muzzle points down slightly left; both pupils gather low-left."
+      },
+      {
+        "label": "I",
+        "horizontal": "screen-left",
+        "vertical": "down",
+        "reason": "Lowered muzzle angles left; pupils aim toward lower-left corners."
+      },
+      {
+        "label": "J",
+        "horizontal": "screen-right",
+        "vertical": "ambiguous",
+        "reason": "Strong rightward snout and gaze, with an approximately level nose and eye line."
+      },
+      {
+        "label": "K",
+        "horizontal": "ambiguous",
+        "vertical": "down",
+        "reason": "Symmetric bowed head and centered nose; both pupils lie low toward the chest."
+      },
+      {
+        "label": "L",
+        "horizontal": "screen-right",
+        "vertical": "up",
+        "reason": "Snout points right and slightly upward; pupils sit high-right in visible eyes."
+      },
+      {
+        "label": "M",
+        "horizontal": "screen-right",
+        "vertical": "down",
+        "reason": "Nose angles down-right and pupils look low-right beneath lowered brow."
+      },
+      {
+        "label": "N",
+        "horizontal": "screen-right",
+        "vertical": "up",
+        "reason": "Head pitches upward and right, showing chin; pupils are high-right."
+      },
+      {
+        "label": "O",
+        "horizontal": "screen-left",
+        "vertical": "down",
+        "reason": "Muzzle turns slightly left and downward; larger visible eye aims low-left."
+      },
+      {
+        "label": "P",
+        "horizontal": "screen-right",
+        "vertical": "up",
+        "reason": "Muzzle turns right with upward tilt; pupils are directed upper-right."
+      }
+    ],
+    "work": [
+      {
+        "label": "A",
+        "horizontal": "screen-right",
+        "vertical": "down",
+        "reason": "Muzzle and eye line tip down toward screen-right."
+      },
+      {
+        "label": "B",
+        "horizontal": "screen-right",
+        "vertical": "ambiguous",
+        "reason": "Nose projects right and eyes look right; vertical aim appears level."
+      },
+      {
+        "label": "C",
+        "horizontal": "screen-left",
+        "vertical": "up",
+        "reason": "Raised muzzle and irises aim toward the upper left."
+      },
+      {
+        "label": "D",
+        "horizontal": "ambiguous",
+        "vertical": "up",
+        "reason": "Head tilts backward and both eyes aim upward symmetrically."
+      },
+      {
+        "label": "E",
+        "horizontal": "screen-left",
+        "vertical": "ambiguous",
+        "reason": "Muzzle projects left and eyes turn left with little vertical tilt."
+      },
+      {
+        "label": "F",
+        "horizontal": "screen-left",
+        "vertical": "up",
+        "reason": "Chin raised and eye direction points upper left."
+      },
+      {
+        "label": "G",
+        "horizontal": "screen-left",
+        "vertical": "up",
+        "reason": "Muzzle turns left with a small upward pitch and lifted gaze."
+      },
+      {
+        "label": "H",
+        "horizontal": "ambiguous",
+        "vertical": "down",
+        "reason": "Centered nose drops toward chest and eyes look below."
+      },
+      {
+        "label": "I",
+        "horizontal": "screen-left",
+        "vertical": "down",
+        "reason": "Lowered muzzle turns left and irises aim down-left."
+      },
+      {
+        "label": "J",
+        "horizontal": "screen-right",
+        "vertical": "ambiguous",
+        "reason": "Nose and pupils point right; vertical aim is near level."
+      },
+      {
+        "label": "K",
+        "horizontal": "ambiguous",
+        "vertical": "down",
+        "reason": "Symmetric lowered head and downward gaze."
+      },
+      {
+        "label": "L",
+        "horizontal": "screen-right",
+        "vertical": "up",
+        "reason": "Rightward muzzle has raised chin and upward-looking irises."
+      },
+      {
+        "label": "M",
+        "horizontal": "screen-right",
+        "vertical": "down",
+        "reason": "Muzzle lowers toward screen-right and eyes follow below."
+      },
+      {
+        "label": "N",
+        "horizontal": "screen-right",
+        "vertical": "up",
+        "reason": "Raised nose points right and eyes track upper right."
+      },
+      {
+        "label": "O",
+        "horizontal": "screen-left",
+        "vertical": "down",
+        "reason": "Head turns left and nose dips with downward eye aim."
+      },
+      {
+        "label": "P",
+        "horizontal": "screen-right",
+        "vertical": "up",
+        "reason": "Chin lifts and nose and pupils point upper right."
+      }
+    ],
+    "other": [
+      {
+        "label": "A",
+        "horizontal": "screen-right",
+        "vertical": "down",
+        "reason": "Muzzle projects right; brow pitched down with gaze toward lower right."
+      },
+      {
+        "label": "B",
+        "horizontal": "screen-right",
+        "vertical": "ambiguous",
+        "reason": "Nose projects right and eyes look right; vertical gaze reads approximately level."
+      },
+      {
+        "label": "C",
+        "horizontal": "screen-left",
+        "vertical": "up",
+        "reason": "Raised muzzle points left; pupils and upper eye exposure show upward gaze."
+      },
+      {
+        "label": "D",
+        "horizontal": "ambiguous",
+        "vertical": "up",
+        "reason": "Frontal symmetric muzzle with chin lifted; both eyes gaze upward."
+      },
+      {
+        "label": "E",
+        "horizontal": "screen-left",
+        "vertical": "ambiguous",
+        "reason": "Nose points left and eyes look left; upward or downward pitch is not clear."
+      },
+      {
+        "label": "F",
+        "horizontal": "screen-left",
+        "vertical": "up",
+        "reason": "Head tilts back and muzzle lifts left; eyes look above left."
+      },
+      {
+        "label": "G",
+        "horizontal": "screen-left",
+        "vertical": "up",
+        "reason": "Muzzle turns left with slight chin lift; eyes point left and above level."
+      },
+      {
+        "label": "H",
+        "horizontal": "screen-right",
+        "vertical": "down",
+        "reason": "Head bows; muzzle shifts right of skull center and eyes look downward right."
+      },
+      {
+        "label": "I",
+        "horizontal": "screen-left",
+        "vertical": "down",
+        "reason": "Bowed muzzle turns left with eyes lowered toward lower left."
+      },
+      {
+        "label": "J",
+        "horizontal": "screen-right",
+        "vertical": "ambiguous",
+        "reason": "Profile muzzle and pupils point right; vertical head pitch remains close to level."
+      },
+      {
+        "label": "K",
+        "horizontal": "ambiguous",
+        "vertical": "down",
+        "reason": "Frontal symmetrical bowed head; nose and both pupils aim downward."
+      },
+      {
+        "label": "L",
+        "horizontal": "screen-right",
+        "vertical": "up",
+        "reason": "Raised rightward muzzle and eye gaze toward upper right."
+      },
+      {
+        "label": "M",
+        "horizontal": "screen-right",
+        "vertical": "down",
+        "reason": "Nose points down and right; head bows and eyes look toward lower right."
+      },
+      {
+        "label": "N",
+        "horizontal": "screen-right",
+        "vertical": "up",
+        "reason": "Chin raised and nose points right; pupils occupy upper right eye surfaces."
+      },
+      {
+        "label": "O",
+        "horizontal": "screen-left",
+        "vertical": "down",
+        "reason": "Muzzle shifts left and down; lowered eyes follow toward lower left."
+      },
+      {
+        "label": "P",
+        "horizontal": "screen-right",
+        "vertical": "up",
+        "reason": "Rightward muzzle pitched slightly up, with gaze above right."
+      }
+    ]
+  },
+  "results": [
+    {
+      "blind_label": "D",
+      "degrees": 0.0,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "ambiguous": 3
+          },
+          "majority": "ambiguous"
+        },
+        "vertical": {
+          "counts": {
+            "up": 3
+          },
+          "majority": "up"
+        }
+      }
+    },
+    {
+      "blind_label": "N",
+      "degrees": 22.5,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-right": 3
+          },
+          "majority": "screen-right"
+        },
+        "vertical": {
+          "counts": {
+            "up": 3
+          },
+          "majority": "up"
+        }
+      }
+    },
+    {
+      "blind_label": "L",
+      "degrees": 45.0,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-right": 3
+          },
+          "majority": "screen-right"
+        },
+        "vertical": {
+          "counts": {
+            "up": 3
+          },
+          "majority": "up"
+        }
+      }
+    },
+    {
+      "blind_label": "P",
+      "degrees": 67.5,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-right": 3
+          },
+          "majority": "screen-right"
+        },
+        "vertical": {
+          "counts": {
+            "up": 3
+          },
+          "majority": "up"
+        }
+      }
+    },
+    {
+      "blind_label": "J",
+      "degrees": 90.0,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-right": 3
+          },
+          "majority": "screen-right"
+        },
+        "vertical": {
+          "counts": {
+            "ambiguous": 3
+          },
+          "majority": "ambiguous"
+        }
+      }
+    },
+    {
+      "blind_label": "B",
+      "degrees": 112.5,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-right": 3
+          },
+          "majority": "screen-right"
+        },
+        "vertical": {
+          "counts": {
+            "down": 1,
+            "ambiguous": 2
+          },
+          "majority": "ambiguous"
+        }
+      }
+    },
+    {
+      "blind_label": "M",
+      "degrees": 135.0,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-right": 3
+          },
+          "majority": "screen-right"
+        },
+        "vertical": {
+          "counts": {
+            "down": 3
+          },
+          "majority": "down"
+        }
+      }
+    },
+    {
+      "blind_label": "A",
+      "degrees": 157.5,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-right": 3
+          },
+          "majority": "screen-right"
+        },
+        "vertical": {
+          "counts": {
+            "down": 3
+          },
+          "majority": "down"
+        }
+      }
+    },
+    {
+      "blind_label": "K",
+      "degrees": 180.0,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "ambiguous": 3
+          },
+          "majority": "ambiguous"
+        },
+        "vertical": {
+          "counts": {
+            "down": 3
+          },
+          "majority": "down"
+        }
+      }
+    },
+    {
+      "blind_label": "H",
+      "degrees": 202.5,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-left": 1,
+            "ambiguous": 1,
+            "screen-right": 1
+          },
+          "majority": "ambiguous"
+        },
+        "vertical": {
+          "counts": {
+            "down": 3
+          },
+          "majority": "down"
+        }
+      }
+    },
+    {
+      "blind_label": "I",
+      "degrees": 225.0,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-left": 3
+          },
+          "majority": "screen-left"
+        },
+        "vertical": {
+          "counts": {
+            "down": 3
+          },
+          "majority": "down"
+        }
+      }
+    },
+    {
+      "blind_label": "O",
+      "degrees": 247.5,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-left": 3
+          },
+          "majority": "screen-left"
+        },
+        "vertical": {
+          "counts": {
+            "down": 3
+          },
+          "majority": "down"
+        }
+      }
+    },
+    {
+      "blind_label": "E",
+      "degrees": 270.0,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-left": 3
+          },
+          "majority": "screen-left"
+        },
+        "vertical": {
+          "counts": {
+            "ambiguous": 3
+          },
+          "majority": "ambiguous"
+        }
+      }
+    },
+    {
+      "blind_label": "G",
+      "degrees": 292.5,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-left": 3
+          },
+          "majority": "screen-left"
+        },
+        "vertical": {
+          "counts": {
+            "up": 3
+          },
+          "majority": "up"
+        }
+      }
+    },
+    {
+      "blind_label": "C",
+      "degrees": 315.0,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-left": 3
+          },
+          "majority": "screen-left"
+        },
+        "vertical": {
+          "counts": {
+            "up": 3
+          },
+          "majority": "up"
+        }
+      }
+    },
+    {
+      "blind_label": "F",
+      "degrees": 337.5,
+      "votes": {
+        "horizontal": {
+          "counts": {
+            "screen-left": 3
+          },
+          "majority": "screen-left"
+        },
+        "vertical": {
+          "counts": {
+            "up": 3
+          },
+          "majority": "up"
+        }
+      }
+    }
+  ]
+}

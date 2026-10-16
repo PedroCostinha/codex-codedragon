@@ -1,10 +1,16 @@
 # Lista permitida: todo arquivo novo permanece ignorado por padrão.
 *
 !/.gitignore
+!/.gitattributes
 !/README.md
 !/assets/
 !/assets/reference/
 !/assets/reference/codedragon.png
+!/assets/source/
+!/assets/source/v2-r2/
+!/assets/source/v2-r2/*.png
+!/assets/source/v2-r2/*.txt
+!/assets/source/v2-r2/*.json
 !/pets/
 !/pets/codedragon/
 !/pets/codedragon/pet-manifest.json
@@ -17,6 +23,9 @@
 !/assets/qa/*.json
 !/tools/
 !/tools/*.py
+!/tools/pet_pipeline/
+!/tools/pet_pipeline/*.py
+!/tools/pet_pipeline/*.json
 !/tools/requirements-dev.txt
 !/docs/
 !/docs/*.md

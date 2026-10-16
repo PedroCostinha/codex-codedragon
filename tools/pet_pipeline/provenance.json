@@ -1,0 +1,9 @@
+{
+  "source": "work-pets 0.1.6 / create-pet/scripts, unmodified copies",
+  "files": {
+    "assemble_extended_atlas.py": "a8684c22e9409f1add388688218c8fa7e267b88b91fcb3edc3280dc87ebf1c3e",
+    "compose_atlas.py": "d690f42252746b3306007b269168e62cff08b36d58e9aef246b78d986b6a10d5",
+    "despill_chroma_edges.py": "dc93a5e752f4100e55010205462a8e7272bac451ee7e29b525abd6157a7fe309",
+    "extract_strip_frames.py": "af2cfea385189df30674c91f4658a49e5b51e58471057fbca0b3319cf932c75e"
+  }
+}

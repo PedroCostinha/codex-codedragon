@@ -1,22 +1,121 @@
 {
-  "review": "Labeled visual inspection of assets/previews/look-directions.png at native cell size",
-  "scope": "All sixteen original look frames are pixel-identical. No look regeneration or new blind review in V2.",
+  "sha256": "e5420e75ae9ca6c9a1d54f13b771d5e1b4a3d5a13d5331a4ddd31987ad62a7b5",
+  "date": "2026-10-16",
+  "review": "Labeled final encoded sheet, ordered loop frames and independent blind axes",
+  "scope": "Sixteen newly generated hornless look frames; cardinals confirmed by three blind reviewers.",
   "directions": [
-    {"label":"000","expected":"up","observed":"up","verdict":"pass","reason":"Both eyes aim above the muzzle; chin and snout lift while feet remain planted."},
-    {"label":"022.5","expected":"up-right","observed":"subtle up-right","verdict":"warning","reason":"Eyes remain above the muzzle with a small screen-right head turn; vertical component is subtle."},
-    {"label":"045","expected":"up-right","observed":"up-right","verdict":"pass","reason":"Snout turns toward screen-right and the pupils stay high in the visible eye surfaces."},
-    {"label":"067.5","expected":"up-right","observed":"subtle up-right","verdict":"warning","reason":"Right-facing muzzle and slightly elevated visible gaze; close to the neighboring right pose."},
-    {"label":"090","expected":"right","observed":"right","verdict":"pass","reason":"Head and snout face screen-right, with visible pupils directed right along the eye line."},
-    {"label":"112.5","expected":"down-right","observed":"subtle down-right","verdict":"warning","reason":"Right-facing head retained; pupils and muzzle lower slightly relative to 090."},
-    {"label":"135","expected":"down-right","observed":"down-right","verdict":"pass","reason":"Right-facing muzzle lowers and the eye aims toward its lower-right edge."},
-    {"label":"157.5","expected":"down-right","observed":"subtle down-right","verdict":"warning","reason":"Lowered gaze remains right-facing before the front-down pose; small angular distinction."},
-    {"label":"180","expected":"down","observed":"down","verdict":"pass","reason":"Front-facing head bows, muzzle lowers, eyes sit below the brow with a downward gaze."},
-    {"label":"202.5","expected":"down-left","observed":"subtle down-left","verdict":"warning","reason":"Bowed head begins turning left; visible eye aims below-left with restrained amplitude."},
-    {"label":"225","expected":"down-left","observed":"down-left","verdict":"pass","reason":"Muzzle and visible eye turn screen-left while the head remains pitched downward."},
-    {"label":"247.5","expected":"down-left","observed":"subtle down-left","verdict":"warning","reason":"Left-facing profile stays slightly lowered; differs only subtly from the left cardinal."},
-    {"label":"270","expected":"left","observed":"left","verdict":"pass","reason":"Snout points screen-left and the pupil sits on the screen-left side of the visible eye."},
-    {"label":"292.5","expected":"up-left","observed":"subtle up-left","verdict":"warning","reason":"Left-facing head lifts from 270 and the gaze starts rising; continuity metric flags this pair."},
-    {"label":"315","expected":"up-left","observed":"up-left","verdict":"pass","reason":"Muzzle tilts up-left and the eyes aim above-left of the face center."},
-    {"label":"337.5","expected":"up-left","observed":"subtle up-left","verdict":"warning","reason":"Eyes aim high with a residual left turn; original wrap to 000 has a larger measured difference."}
-  ]
+    {
+      "label": "000",
+      "expected": "up",
+      "observed": "up",
+      "verdict": "pass",
+      "reason": "Centered raised muzzle and both blue eyes aim high, with the chin exposed."
+    },
+    {
+      "label": "022.5",
+      "expected": "up-right",
+      "observed": "up-right",
+      "verdict": "pass",
+      "reason": "Nose and face yaw screen-right while the snout is raised and the eyes aim high."
+    },
+    {
+      "label": "045",
+      "expected": "up-right",
+      "observed": "up-right",
+      "verdict": "pass",
+      "reason": "Rightward nose and raised eye line express the upper-right diagonal."
+    },
+    {
+      "label": "067.5",
+      "expected": "up-right",
+      "observed": "subtle up-right",
+      "verdict": "warning",
+      "reason": "Rightward snout is slightly raised relative to 090; its upward component is subtle."
+    },
+    {
+      "label": "090",
+      "expected": "right",
+      "observed": "right",
+      "verdict": "pass",
+      "reason": "Nose, face and blue eye surfaces point screen-right at near-level pitch."
+    },
+    {
+      "label": "112.5",
+      "expected": "down-right",
+      "observed": "subtle down-right",
+      "verdict": "warning",
+      "reason": "Right-facing head lowers relative to 090; vertical direction is subtle and two blind reviewers called it ambiguous."
+    },
+    {
+      "label": "135",
+      "expected": "down-right",
+      "observed": "down-right",
+      "verdict": "pass",
+      "reason": "Nose points screen-right and down while the head visibly bows and the eyes aim lower."
+    },
+    {
+      "label": "157.5",
+      "expected": "down-right",
+      "observed": "down-right",
+      "verdict": "pass",
+      "reason": "Deeply lowered snout keeps a rightward yaw, approaching the down cardinal."
+    },
+    {
+      "label": "180",
+      "expected": "down",
+      "observed": "down",
+      "verdict": "pass",
+      "reason": "Frontal centered nose bows toward the chest with both eye surfaces aimed low."
+    },
+    {
+      "label": "202.5",
+      "expected": "down-left",
+      "observed": "subtle down-left",
+      "verdict": "warning",
+      "reason": "Bowed head begins its screen-left yaw; two blind reviewers saw down-left, one saw straight down."
+    },
+    {
+      "label": "225",
+      "expected": "down-left",
+      "observed": "down-left",
+      "verdict": "pass",
+      "reason": "Muzzle and eye surfaces point screen-left below the neutral eye line."
+    },
+    {
+      "label": "247.5",
+      "expected": "down-left",
+      "observed": "subtle down-left",
+      "verdict": "warning",
+      "reason": "Left-facing muzzle stays slightly lowered; the down component is restrained."
+    },
+    {
+      "label": "270",
+      "expected": "left",
+      "observed": "left",
+      "verdict": "pass",
+      "reason": "Muzzle and blue eye surfaces aim screen-left with approximately horizontal pitch."
+    },
+    {
+      "label": "292.5",
+      "expected": "up-left",
+      "observed": "subtle up-left",
+      "verdict": "warning",
+      "reason": "Head and nose turn left and lift slightly; both axes were recognized by all reviewers."
+    },
+    {
+      "label": "315",
+      "expected": "up-left",
+      "observed": "up-left",
+      "verdict": "pass",
+      "reason": "Raised snout and eye surfaces aim diagonally toward the upper-left."
+    },
+    {
+      "label": "337.5",
+      "expected": "up-left",
+      "observed": "up-left",
+      "verdict": "pass",
+      "reason": "Chin rises strongly while nose and eyes retain a leftward aim approaching the up cardinal."
+    }
+  ],
+  "continuity_review": "157.5->180 and 337.5->000 have larger local pixel differences; the first joins distinct head pitches and a 1.24 visible-area ratio. No clipping, alpha hole, wrong quadrant, reversal or blocking registration snap observed in native-size ordered frames. Retained as reviewed warnings."
 }
