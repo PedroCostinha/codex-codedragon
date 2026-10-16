@@ -1,0 +1,20 @@
+{
+  "sha256": "e5420e75ae9ca6c9a1d54f13b771d5e1b4a3d5a13d5331a4ddd31987ad62a7b5",
+  "date": "2026-10-16",
+  "ok": true,
+  "reviewers": [
+    "primary labeled review",
+    "independent final contact review",
+    "three blind direction reviewers"
+  ],
+  "scope": "Encoded 73-frame contact, all-state and per-state GIF frame sequences, matte sheet, 16 labeled and randomized looks",
+  "observations": [
+    "All 73 frames have rounded hornless skulls; historical reference remains unchanged",
+    "Six work poses show seated dragon, small chair, compact desk, monitor and keyboard; face and logo visible",
+    "Both directional runs retain black anatomy and normal emblem, with stronger attached blue energy",
+    "All source poses complete, no final cell clipping; jump retains 55px lift",
+    "No blocking visual defect in independent final review; subtle gaze axes and two boundary transitions documented"
+  ],
+  "native_player_tested": false,
+  "installed_pet_mutated": false
+}

@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-16",
+  "documentation": "https://learn.chatgpt.com/docs/pets",
+  "documentation_inspected": true,
+  "tools": [
+    {
+      "name": "mcp__codex_apps__pets_adopt",
+      "capability": "Adopt a shared ChatGPT pet from its opaque sharepet_ ID. When the user provides a full /s/sharepet_ URL, extract the sharepet_ ID and pass it here. This installs a new user-owned copy in the current user's pet library without exposing owner identity."
+    },
+    {
+      "name": "mcp__codex_apps__pets_create_pet",
+      "capability": "Consume a completed prepare_pet_upload session by its upload_session_id, validate the sprite sheet with the same deterministic preflight, run image scanning and pet moderation, and create a ChatGPT pet for Work mode. The upload session is the create idempotency key: retry a transient or timed-out create with the same upload_session_id, name, and description. If transfer, upload finalization, sprite-sheet validation, or session expiration fails, repair the file when needed, call prepare_pet_upload again, and use the new session. This does not select the pet; call select_pet when the user wants to use it."
+    },
+    {
+      "name": "mcp__codex_apps__pets_delete_pet",
+      "capability": "Permanently delete one owned custom ChatGPT pet and its stored sprite sheet. Use only after an explicit user request. Built-in pets cannot be deleted."
+    },
+    {
+      "name": "mcp__codex_apps__pets_get_pet_download_link",
+      "capability": "Get a download URL for one built-in or owned custom ChatGPT pet sprite sheet. Built-in URLs are static and custom-pet URLs are short-lived; always use the stable pet ID as identity."
+    },
+    {
+      "name": "mcp__codex_apps__pets_list_pets",
+      "capability": "List one page of built-in and custom ChatGPT pet metadata plus the active pet ID. At most 20 pets are returned per page; larger requested limits are capped. When cursor is non-null, call list_pets again with that cursor to continue; keep paging until cursor is null or the requested stable pet ID is found. This does not return image URLs; use get_pet_download_link to inspect or download any pet."
+    },
+    {
+      "name": "mcp__codex_apps__pets_prepare_pet_upload",
+      "capability": "Prepare a user-scoped ChatGPT pet sprite-sheet upload. First call validate_pet_spritesheet and repair all reported errors. Pass the final sprite sheet's absolute local path as file; the host uploads and rewrites it before this tool receives the authenticated file reference. The file is validated and transferred automatically; pass the returned upload_session_id to create_pet or update_pet. The sprite sheet must be exactly 1536x1872 pixels (v1, 8 columns by 9 rows) or 1536x2288 pixels (v2, 8 columns by 11 rows). Use 192x208 cells and populate the first 6, 8, 8, 4, 5, 8, 6, 6, and 6 cells of the first nine rows with artwork and a transparent background; v2 must also populate all 8 cells in each of its final two rows. Other row counts are not supported."
+    },
+    {
+      "name": "mcp__codex_apps__pets_select_pet",
+      "capability": "Persist a built-in or owned custom ChatGPT pet as active by its stable pet ID. Pass default to turn the animated companion off."
+    },
+    {
+      "name": "mcp__codex_apps__pets_share_pet",
+      "capability": "Create a share link for one owned custom ChatGPT pet. Personal links are public; enterprise links follow the same workspace access rules as shared conversations. The snapshot contains only the pet name, description, and sprite sheet and never owner identity. Use only after the user explicitly confirms the applicable audience. Built-in pets cannot be shared."
+    },
+    {
+      "name": "mcp__codex_apps__pets_unshare_pet",
+      "capability": "Stop sharing one owned custom ChatGPT pet and invalidate its current share URL. Use only after an explicit user request. This does not delete the pet."
+    },
+    {
+      "name": "mcp__codex_apps__pets_update_pet",
+      "capability": "Update the name, description, sprite sheet, or any combination for one owned custom ChatGPT pet. Omit a field to preserve it; set description to null to clear it. To replace the sprite sheet, call prepare_pet_upload first and pass its upload_session_id. Retry a transient or timed-out update with the same session; after transfer, finalization, validation, or expiration errors, repair the file when needed and prepare a new session."
+    },
+    {
+      "name": "mcp__codex_apps__pets_validate_pet_spritesheet",
+      "capability": "Validate a ChatGPT pet PNG or WebP before creating an upload session. Pass its absolute local path as file; the host uploads and rewrites it before this tool receives the authenticated file reference. Return structured zero-indexed row/frame errors for wrong dimensions, missing artwork, opaque backgrounds, and artwork in unused cells. Supports 1536x1872 v1 and 1536x2288 v2 sheets with 192x208 cells. Repair every error and repeat until valid=true, then pass the same file to prepare_pet_upload. This read-only preflight does not create a pet upload session, scan, moderate, or create a pet."
+    }
+  ],
+  "findings": {
+    "drag_callbacks_exposed": false,
+    "persistent_external_trails_exposed": false,
+    "external_particle_api_exposed": false,
+    "custom_drag_handlers_exposed": false
+  },
+  "implementation": "Blue energy is baked into locomotion frames, moves with the sprite and leaves no persistent screen-space history.",
+  "scope": "No supported extension point found in the documentation and tool schemas consulted; this does not claim knowledge of undisclosed host internals.",
+  "installed_pet_mutated": false
+}

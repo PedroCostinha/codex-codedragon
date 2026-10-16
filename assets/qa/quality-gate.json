@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "atlas": "C:\\Projetos\\codex-codedragon\\pets\\codedragon\\spritesheet.png",
+  "encoded_bytes": 2168293,
+  "sha256": "e5420e75ae9ca6c9a1d54f13b771d5e1b4a3d5a13d5331a4ddd31987ad62a7b5",
+  "jump": {
+    "idle_baseline": 197,
+    "jump_baselines": [
+      198,
+      169,
+      143,
+      167,
+      198
+    ],
+    "airborne_lift_pixels": 55,
+    "landing_delta_pixels": 1
+  },
+  "look_registration": {
+    "neutral_center_x": 96.0,
+    "look_centers_x": [
+      95.0,
+      96.0,
+      96.0,
+      96.5,
+      97.0,
+      97.0,
+      97.0,
+      97.5,
+      95.5,
+      96.0,
+      96.0,
+      97.0,
+      97.0,
+      96.5,
+      97.0,
+      96.0
+    ],
+    "look_widths": [
+      86,
+      84,
+      84,
+      83,
+      82,
+      82,
+      82,
+      81,
+      95,
+      94,
+      92,
+      92,
+      92,
+      91,
+      92,
+      92
+    ],
+    "maximum_center_drift_pixels": 1.5,
+    "maximum_width_ratio": 1.1728395061728396
+  },
+  "errors": [],
+  "warnings": [
+    "look direction 067.5 accepted with a reviewed warning",
+    "look direction 112.5 accepted with a reviewed warning",
+    "look direction 202.5 accepted with a reviewed warning",
+    "look direction 247.5 accepted with a reviewed warning",
+    "look direction 292.5 accepted with a reviewed warning",
+    "157.5->180 diff is a local outlier (2861 pixels vs neighbor average 816)",
+    "157.5->180 sprite area ratio is high (1.24)",
+    "337.5->000 diff is a local outlier (2035 pixels vs neighbor average 830)"
+  ]
+}
