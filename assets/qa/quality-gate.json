@@ -1,0 +1,72 @@
+{
+  "ok": true,
+  "atlas": "C:\\Projetos\\codex-codedragon\\pets\\codedragon\\spritesheet.png",
+  "encoded_bytes": 1913271,
+  "sha256": "3648d95700b376609ffd0b63225d6dc255a2986b5c97b2b11be044a303f5f490",
+  "jump": {
+    "idle_baseline": 198,
+    "jump_baselines": [
+      197,
+      169,
+      143,
+      167,
+      198
+    ],
+    "airborne_lift_pixels": 55,
+    "landing_delta_pixels": 0
+  },
+  "look_registration": {
+    "neutral_center_x": 95.5,
+    "look_centers_x": [
+      92.5,
+      92.0,
+      92.0,
+      90.0,
+      91.0,
+      91.0,
+      89.5,
+      90.0,
+      93.0,
+      93.5,
+      95.0,
+      95.0,
+      95.0,
+      96.0,
+      95.5,
+      94.5
+    ],
+    "look_widths": [
+      85,
+      84,
+      84,
+      86,
+      84,
+      84,
+      83,
+      84,
+      82,
+      79,
+      82,
+      82,
+      82,
+      82,
+      83,
+      83
+    ],
+    "maximum_center_drift_pixels": 6.0,
+    "maximum_width_ratio": 1.0886075949367089
+  },
+  "errors": [],
+  "warnings": [
+    "look direction 022.5 accepted with a reviewed warning",
+    "look direction 067.5 accepted with a reviewed warning",
+    "look direction 112.5 accepted with a reviewed warning",
+    "look direction 157.5 accepted with a reviewed warning",
+    "look direction 202.5 accepted with a reviewed warning",
+    "look direction 247.5 accepted with a reviewed warning",
+    "look direction 292.5 accepted with a reviewed warning",
+    "look direction 337.5 accepted with a reviewed warning",
+    "270->292.5 diff is a local outlier (1393 pixels vs neighbor average 906)",
+    "337.5->000 diff is a local outlier (2061 pixels vs neighbor average 1064)"
+  ]
+}

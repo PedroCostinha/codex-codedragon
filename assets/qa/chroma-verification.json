@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "sha256": "3648d95700b376609ffd0b63225d6dc255a2986b5c97b2b11be044a303f5f490",
+  "method": "Read-only chroma measurements from the bundled validate_atlas.py; no chroma extraction or recoloring needed for original transparent artwork",
+  "opaque_chroma_key_pixels": 0,
+  "chroma_fringe_pixels": 0,
+  "transparent_rgb_residue_pixels": 0
+}

@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-16",
+  "command": "python tools/test_validation.py",
+  "tests_run": 9,
+  "result": "OK",
+  "exit_code": 0,
+  "cases": [
+    "test_changed_look_rejected",
+    "test_clipping_rejected",
+    "test_hidden_rgb_rejected",
+    "test_missing_alpha_rejected",
+    "test_missing_pose_rejected",
+    "test_opaque_background_rejected",
+    "test_release_passes",
+    "test_unused_cell_occupied_rejected",
+    "test_wrong_dimensions_rejected"
+  ],
+  "sheet_sha256": "3648d95700b376609ffd0b63225d6dc255a2986b5c97b2b11be044a303f5f490"
+}

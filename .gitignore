@@ -9,3 +9,14 @@
 !/pets/codedragon/
 !/pets/codedragon/pet-manifest.json
 !/pets/codedragon/spritesheet.png
+!/assets/previews/
+!/assets/previews/*.png
+!/assets/previews/*.gif
+!/assets/previews/*.mp4
+!/assets/qa/
+!/assets/qa/*.json
+!/tools/
+!/tools/*.py
+!/tools/requirements-dev.txt
+!/docs/
+!/docs/*.md
